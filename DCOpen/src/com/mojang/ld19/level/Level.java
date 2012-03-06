@@ -275,6 +275,7 @@ public class Level
 		Random r = new Random();
 		
 		OctavesNoiseGen noise = new OctavesNoiseGen(r, 8);
+		SimplexNoise flowerDensity = new SimplexNoise(r);
 
 		w = 512;
 		h = 512;
@@ -294,19 +295,24 @@ public class Level
 			for (int y = 0; y < h; y++)
 			{
 				Tile tile;
-				double noiseval = noise.noise(x / 32d, y / 32d);
+				double noiseval = noise.noise(x / 80d, y / 80d);
 				if (noiseval >= 0.0)
 				{
-					if (r.nextInt(8) != 0)
-					{
-						tile = new Tile(Walls.grass);
-					}
-					else
+					int flowerchance = (int)Math.abs(flowerDensity.noise(x / 2D, y / 2D) * 16) + 1;
+					if (r.nextInt(8) == 0)
 					{
 						tile = new BlockingTile(Walls.tree);
 					}
+					else if (r.nextInt(flowerchance) == 0)
+					{
+						tile = new Tile(Walls.grassFlowers);
+					}
+					else
+					{
+						tile = new Tile(Walls.grass);
+					}
 				}
-				else if (noiseval < 0.0 && noiseval >= -0.3)
+				else if (noiseval < 0.0 && noiseval >= -0.2)
 				{
 					tile = new Tile(Walls.sand);
 				}
