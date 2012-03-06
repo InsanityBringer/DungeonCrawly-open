@@ -1,0 +1,34 @@
+package com.mojang.ld19.level.walls;
+
+import java.util.Random;
+
+import com.mojang.ld19.Art;
+import com.mojang.ld19.display.*;
+
+public class Grass extends SpriteBody {
+    public Grass(boolean flowers) {
+        Random random = new Random(43287234);
+        int w = 6;
+        int h = 8;
+        double ws = 1.0 / (w);
+        double hs = 1.0 / (h);
+        for (int x = 0; x < w; x++) {
+            for (int z = 0; z < w; z++) {
+                int y = h - 1;
+                double xx = x * ws + (random.nextFloat() - 0.5) * 0.04;
+                double yy = y * hs + (random.nextFloat() - 0.5) * 0.04;
+                double zz = z * ws + (random.nextFloat() - 0.5) * 0.04;
+                sprites.add(new Sprite(xx, yy, zz, Art.grass));
+            }
+        }
+        if (flowers) {
+            for (int i=0; i<10; i++) {
+                int y = h - 2;
+                double yy = y * hs + (random.nextFloat() - 0.5) * 0.04;
+                double xx = random.nextDouble()*0.8+0.1;
+                double zz = random.nextDouble()*0.8+0.1;
+                sprites.add(new Sprite(xx, yy, zz, Art.flower));
+            }
+        }
+    }
+}
