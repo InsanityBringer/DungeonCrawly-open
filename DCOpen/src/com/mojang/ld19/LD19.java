@@ -10,6 +10,7 @@ import javax.swing.JApplet;
 import com.mojang.ld19.display.*;
 import com.mojang.ld19.gui.Gui;
 import com.mojang.ld19.gui.GuiItBroke;
+import com.mojang.ld19.gui.GuiLog;
 import com.mojang.ld19.gui.Menu;
 import com.mojang.ld19.gui.MainMenu;
 import com.mojang.ld19.item.Item;
@@ -88,7 +89,9 @@ public class LD19 extends JApplet implements Runnable {
      */
     public void beginGame(PlayerClass playerClass, PlayerSkill altSkill, int str, int dex, int con, int ints, int skill1, int skill2, int skill3)
     {
-        level = new Level(null, 0, false);
+    	GuiLog log = new GuiLog(this);
+    	mainMenu = log;
+        level = new Level(null, 0, false, log);
         level.init();
         level.player.currentClass = playerClass;
         level.player.skill1 = playerClass.primarySkill;

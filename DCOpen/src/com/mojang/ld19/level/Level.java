@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import com.mojang.ld19.*;
 import com.mojang.ld19.display.Bitmap;
+import com.mojang.ld19.gui.GuiLog;
 import com.mojang.ld19.item.Item;
 import com.mojang.ld19.level.noise.*;
 import com.mojang.ld19.level.object.Switch;
@@ -269,8 +270,9 @@ public class Level
 	 * @param player The player to be spawned into the world
 	 * @param layer The layer of the level
 	 * @param loading Indicates whether or not the map is being loaded from disk. 
+	 * @param log A gui where output from the gen can be displayed
 	 */
-	public Level(Player player, int layer, boolean loading)
+	public Level(Player player, int layer, boolean loading, GuiLog log)
 	{
 		Random r = new Random();
 		
@@ -291,6 +293,7 @@ public class Level
 		int tilecount = 0;
 		double average = 0.0;
 
+		log.addMessage("Building world");
 		for (int x = 0; x < w; x++)
 		{
 			for (int y = 0; y < h; y++)
@@ -322,9 +325,13 @@ public class Level
 				{
 					tile = new Tile(Walls.sand);
 				}
-				else
+				else if (noiseval < -0.2 && noiseval >= -0.4)
 				{
 					tile = new BlockingTile(Walls.water);
+				}
+				else
+				{
+					tile = new BlockingTile(Walls.ocean);
 				}
 				
 				average += noiseval;
@@ -336,7 +343,7 @@ public class Level
 		}
 		
 		
-		
+		log.addMessage("Finding spawn");
 		if (player == null)
 			player = new Player(this, 0, 0);
 		
