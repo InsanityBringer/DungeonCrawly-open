@@ -88,7 +88,7 @@ public class LD19 extends JApplet implements Runnable {
      */
     public void beginGame(PlayerClass playerClass, PlayerSkill altSkill, int str, int dex, int con, int ints, int skill1, int skill2, int skill3)
     {
-        level = Level.get(0, null);
+        level = new Level(null, 0, false);
         level.init();
         level.player.currentClass = playerClass;
         level.player.skill1 = playerClass.primarySkill;

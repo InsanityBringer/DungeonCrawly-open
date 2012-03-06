@@ -5,8 +5,8 @@ import java.io.*;
 import com.mojang.ld19.*;
 import com.mojang.ld19.display.*;
 import com.mojang.ld19.level.object.ItemEntity;
-import com.mojang.ld19.level.object.Arrow;
 import com.mojang.ld19.magic.PoisonCloud;
+import com.mojang.ld19.mob.SmallMob;
 
 public class Tile implements ClickListener {
     protected static Random random = new Random();
@@ -41,8 +41,8 @@ public class Tile implements ClickListener {
         }*/
 
         /*for (int i = 0; i < 4; i++) {
-            if (random.nextInt(30) == 0) {
-                Mob mob = new Mob();
+            if (random.nextInt(60) == 0) {
+                SmallMob mob = new SmallMob();
                 if (!blocks(mob, i)) {
                     addEntity(i, mob);
                 }
