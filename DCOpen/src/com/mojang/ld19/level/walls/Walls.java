@@ -9,6 +9,7 @@ public class Walls {
     public static SpriteBody grass = new Grass(false);
     public static SpriteBody dirtPath = new SimpleFloor(Art.dirt);
     public static SpriteBody stonePath = new SimpleFloor(Art.stonePath);
+    public static SpriteBody sand = new SimpleFloor(Art.sand);
     public static SpriteBody grassFlowers = new Grass(true);
     public static SpriteBody woodenDoor = new Door(Art.wood);
     public static SpriteBody tree = new Tree();

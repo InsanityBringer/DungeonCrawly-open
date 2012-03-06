@@ -264,7 +264,12 @@ public class Level
 		}
 		this.player = player;
 	}
-
+	/**
+	 * Creates a new level instance with a randomly generated overworld
+	 * @param player The player to be spawned into the world
+	 * @param layer The layer of the level
+	 * @param loading Indicates whether or not the map is being loaded from disk. 
+	 */
 	public Level(Player player, int layer, boolean loading)
 	{
 		Random r = new Random();
@@ -292,7 +297,18 @@ public class Level
 				double noiseval = noise.noise(x / 32d, y / 32d);
 				if (noiseval >= 0.0)
 				{
-					tile = new Tile(Walls.grass);
+					if (r.nextInt(8) != 0)
+					{
+						tile = new Tile(Walls.grass);
+					}
+					else
+					{
+						tile = new BlockingTile(Walls.tree);
+					}
+				}
+				else if (noiseval < 0.0 && noiseval >= -0.3)
+				{
+					tile = new Tile(Walls.sand);
 				}
 				else
 				{
@@ -307,7 +323,7 @@ public class Level
 			}
 		}
 		
-		System.out.printf("average: %f\n", average / (double)tilecount);
+		
 		
 		if (player == null)
 			player = new Player(this, 0, 0);

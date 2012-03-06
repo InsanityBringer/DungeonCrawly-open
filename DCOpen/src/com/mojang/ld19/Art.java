@@ -27,6 +27,7 @@ public class Art {
     public static Bitmap magicsparkle = Art.load("/res/magicsparkle.png");
     public static Bitmap hellStone = Art.load("/res/hellstone.png");
     public static Bitmap skystar = Art.load("/res/skystar.png");
+    public static Bitmap sand = Art.load("/res/sand.png");
 
     public static Bitmap normalBrick = Art.load("/res/brick.png");
     public static Bitmap mossBrick = Art.load("/res/mossbrick.png");
