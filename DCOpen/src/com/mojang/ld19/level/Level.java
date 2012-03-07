@@ -21,6 +21,11 @@ public class Level
 	public Player player;
 	public Level replaceWith;
 	public int layer;
+	
+	public int tickcount;
+	
+	private SimplexNoise skillNoise;
+	private Random r;
 
 	public ArrayList<Switch> specialSwitches = new ArrayList<Switch>();
 
@@ -274,11 +279,12 @@ public class Level
 	 */
 	public Level(Player player, int layer, boolean loading, GuiLog log)
 	{
-		Random r = new Random();
+		r = new Random();
 		
 		OctavesNoiseGen noise = new OctavesNoiseGen(r, 8);
 		SimplexNoise flowerDensity = new SimplexNoise(r);
 		SimplexNoise treeDensity = new SimplexNoise(r);
+		skillNoise = new SimplexNoise(r);
 
 		w = 512;
 		h = 512;
@@ -299,7 +305,7 @@ public class Level
 			for (int y = 0; y < h; y++)
 			{
 				Tile tile;
-				double noiseval = noise.noise(x / 80d, y / 80d);
+				double noiseval = noise.noise(x / 140d, y / 140d);
 				if (noiseval >= 0.0)
 				{
 					int flowerchance = (int)Math.abs(flowerDensity.noise(x / 2D, y / 2D) * 16) + 1;
@@ -341,7 +347,31 @@ public class Level
 				tilecount++;
 			}
 		}
-		
+		log.addMessage("Spawning entities");
+		/*for (int x = 0; x < w; x++)
+		{
+			for (int y = 0; y < h; y++)
+			{
+				double noiseval = skillNoise.noise(x / 80d, y / 80d);
+				
+				if (noiseval > 0.0)
+				{
+					double spawnChance = 16 - (noiseval * 16);
+					spawnChance += 16;
+					if (spawnChance >= 1)
+					{
+						if (r.nextInt((int) spawnChance) == 0)
+						{
+							SmallMob mob = new SmallMob();
+							if (!tiles[x + y * w].blocks(mob))
+							{
+								tiles[x + y * w].addEntity(r.nextInt(4), mob);
+							}
+						}
+					}
+				}
+			}
+		}*/
 		
 		log.addMessage("Finding spawn");
 		if (player == null)
@@ -349,7 +379,7 @@ public class Level
 		
 		int rx = r.nextInt(512); int ry = r.nextInt(512);
 		
-		while (getTile(rx, ry).blocks(player))
+		while (getTile(rx, ry).blocks(player) && skillNoise.noise(rx / 80d, ry / 80d) < 0.0)
 		{
 			rx = r.nextInt(512); ry = r.nextInt(512);
 		}
@@ -395,15 +425,17 @@ public class Level
 
 		return tiles[x + y * w];
 	}
-
+	/**
+	 * Base tick method for the level. Updates all entities, tiles, and player. Has slow repopulation algorithm
+	 */
 	public void tick()
 	{
 		player.tick();
 		List<Entity> toTick = new ArrayList<Entity>();
-		int r = 7;
-		for (int x = -r; x < r; x++)
+		int lr = 7;
+		for (int x = -lr; x < lr; x++)
 		{
-			for (int y = -r; y < r; y++)
+			for (int y = -lr; y < lr; y++)
 			{
 				Tile tile = getTile(player.x + x, player.z + y);
 				tile.addToTick(toTick);
@@ -415,6 +447,25 @@ public class Level
 		{
 			Entity e = toTick.get(i);
 			e.tick(this);
+		}
+		tickcount++;
+		if (tickcount % 1800 == 0)
+		{
+			System.out.println("Adding entity to world");
+			if (r != null)
+			{
+				int rx = r.nextInt(w);
+				int ry = r.nextInt(h);
+				
+				if (skillNoise.noise(rx / 80d, ry / 80d) > 0.0)
+				{
+					SmallMob mob = new SmallMob();
+					if (!tiles[rx + ry * w].blocks(mob))
+					{
+						tiles[rx + ry * w].addEntity(r.nextInt(4), mob);
+					}
+				}
+			}
 		}
 	}
 

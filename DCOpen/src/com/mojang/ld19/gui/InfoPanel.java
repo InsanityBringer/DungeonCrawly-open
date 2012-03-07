@@ -29,8 +29,8 @@ public class InfoPanel extends Menu implements ClickListener
 		TextRenderer.drawString(player.characterName, screen, 292, 8, this);
 		TextRenderer.drawString(player.currentClass.name, screen, 292, 8+7, this);
 		TextRenderer.drawString(String.format("Level %d", player.characterLevel), screen, 292, 8+14, this);
-		TextRenderer.drawString(String.format("EXP: %d", player.totalExp), screen, 292, 8+21, this);
-		TextRenderer.drawString(String.format("AC: %d", player.armorLevel), screen, 292, 14+27, this);
+		TextRenderer.drawString(String.format("X: %d", player.x), screen, 292, 8+21, this); //exp
+		TextRenderer.drawString(String.format("Z: %d", player.z), screen, 292, 14+27, this); //ac
 		
 		TextRenderer.drawString(String.format("STR: %d", player.statStr), screen, 292, 54, this);
 		TextRenderer.drawString(String.format("INT: %d", player.statInt), screen, 292, 54+7, this);

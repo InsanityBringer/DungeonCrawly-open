@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import com.mojang.ld19.*;
 import com.mojang.ld19.display.*;
+import com.mojang.ld19.item.Item;
 import com.mojang.ld19.level.object.ItemEntity;
 import com.mojang.ld19.magic.PoisonCloud;
 import com.mojang.ld19.mob.SmallMob;
@@ -26,8 +27,10 @@ public class Tile implements ClickListener {
 
         }
 
-        /*if (this.canContainItems()) {
-            while (random.nextInt(2) != 0) {
+        if (this.canContainItems()) 
+        {
+            if (random.nextInt(40) == 0) 
+            {
                 addEntity(random.nextInt(4), new ItemEntity(Item.potion));
                 addEntity(random.nextInt(4), new ItemEntity(Item.sword));
                 addEntity(random.nextInt(4), new ItemEntity(Item.helmLeather));
@@ -35,10 +38,10 @@ public class Tile implements ClickListener {
                 addEntity(random.nextInt(4), new ItemEntity(Item.bootsLeather));
                 addEntity(random.nextInt(4), new ItemEntity(Item.legsLeather));
                 addEntity(random.nextInt(4), new ItemEntity(Item.bow));
-                addEntity(random.nextInt(4), new ItemEntity(Item.cursedSword));
+                addEntity(random.nextInt(4), new ItemEntity(Item.arrow));
                 addEntity(random.nextInt(4), new ItemEntity(Item.superSword));
             }
-        }*/
+        }
 
         /*for (int i = 0; i < 4; i++) {
             if (random.nextInt(60) == 0) {

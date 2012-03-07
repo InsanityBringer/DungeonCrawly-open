@@ -79,13 +79,17 @@ public class ThrownItem extends Entity {
             if (rot == 2) yt--;
             if (rot == 3) xt--;
             Tile target = level.getTile(xt / 2, yt / 2);
-            if (target.canContainItems()) {
+            if (target.canContainItems()) 
+            {
                 location.removeEntity(corner, this);
                 target.addEntity(xt % 2 + yt % 2 * 2, this);
-            } else {
+            } 
+            else 
+            {
             }
 
-            if (power == 0) {
+            if (power == 0) 
+            {
                 location.addEntity(corner, new ItemEntity(item));
                 location.removeEntity(corner, this);
             }
